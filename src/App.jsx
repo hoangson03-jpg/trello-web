@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import { pink } from '@mui/material/colors'
 import Typography from '@mui/material/Typography'
 import { useColorScheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+// import useMediaQuery from '@mui/material/useMediaQuery'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -14,6 +14,7 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightnessOutlined'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 function SelectMode() {
   const { mode, setMode } = useColorScheme()
@@ -33,7 +34,7 @@ function SelectMode() {
         onChange={handleChange}
       >
         <MenuItem value='light'>
-          <div style={{display: 'flex', alignItems: 'center', gap: '16px'}}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <LightModeIcon fontSize='small' />
         Light
           </div>
@@ -55,56 +56,59 @@ function SelectMode() {
   )
 }
 
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme()
-  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  // const prefersLightMode = useMediaQuery('(prefers-color-scheme: light)')
-  // console.log('prefersDarkMode: ', prefersDarkMode)
-  // console.log('prefersLightMode: ', prefersLightMode)
+// function ModeToggle() {
+//   const { mode, setMode } = useColorScheme()
+//   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+//   // const prefersLightMode = useMediaQuery('(prefers-color-scheme: light)')
+//   // console.log('prefersDarkMode: ', prefersDarkMode)
+//   // console.log('prefersLightMode: ', prefersLightMode)
 
-  return (
-    <Button
-      onClick = {() => {
-        setMode(mode === 'light' ? 'dark' : 'light')
-      }}
-    >
-      {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>
-  )
-  
-}
+//   return (
+//     <Button
+//       onClick = {() => {
+//         setMode(mode === 'light' ? 'dark' : 'light')
+//       }}
+//     >
+//       {mode === 'light' ? 'Turn dark' : 'Turn light'}
+//     </Button>
+//   )
+
+// }
 function App() {
   return (
     <>
-      <SelectMode />
-      <hr />
-      <ModeToggle />
-      <hr />
-      <div>hoangson03</div>
-      <Typography variant='body2' color='text.secondary' >
-      Test Typography
-      </Typography>
-      <Button variant="text">Text</Button>
-      <Button variant="outlined" >Outlined</Button>
-      <Button variant="contained" color='error'>Contained</Button>
-      <br />
-      <AccessAlarmIcon/>
-      <ThreeDRotation/>
-      <br />
-      <HomeIcon fontSize="small" />
-      <HomeIcon />
-      <HomeIcon fontSize="large" />
-      <HomeIcon sx={{ fontSize: 40 }} />
-      <br />
-      <HomeIcon />
-      <HomeIcon color="primary" />
-      <HomeIcon color="secondary" />
-      <HomeIcon color="success" />
-      <HomeIcon color="action" />
-      <HomeIcon color="disabled" />
-      <HomeIcon sx={{ color: pink[400] }} />
+      <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
+        <Box sx={{
+          backgroundColor: 'primary.light',
+          width: '100%',
+          height: (theme) => theme.trello.appBarHeight,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          <SelectMode />
+        </Box>
+        <Box sx={{
+          backgroundColor: 'primary.dark',
+          width: '100%',
+          height: (theme) => theme.trello.boardBarHeight,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          Board Bar
+        </Box>
+        <Box sx={{
+          backgroundColor: 'primary.main',
+          width: '100%',
+          height: (theme) => `calc(100vh - ${theme.trello.appBarHeight} - ${theme.trello.boardBarHeight})`,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          Board Content
+        </Box>
+      </Container>
     </>
   )
 }
-
+// import container để sử dụng thẻ container sau đó bọc nội dung vào trong đó
+// gọi màu primary.main từ bên theme.js 
 export default App
