@@ -17,7 +17,7 @@ const theme = extendTheme({
     },
     dark: {
       palette: {
-        primary: red,
+        primary: blue,
         secondary: teal
       }
     }
