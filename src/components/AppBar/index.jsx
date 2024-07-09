@@ -1,6 +1,5 @@
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
-import Container from '@mui/material/Container'
-import ModeSelect from '../../components/ModeSelect/index'
+import ModeSelect from '~/components/ModeSelect'
 // Phần AppBar vì được gọi lại nhiều lần nên để trong components để tiện gọi lại cho những lần sau
 function AppBar() {
   return (
