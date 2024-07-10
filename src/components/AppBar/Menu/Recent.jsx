@@ -27,7 +27,7 @@ function Recent() {
         onClick={handleClick}
         endIcon={<ExpandMoreIcon/>}
       >
-        recent
+        Recent
       </Button>
       <Menu
         id="basic-menu-recent"
