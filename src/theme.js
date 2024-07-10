@@ -25,6 +25,27 @@ const theme = extendTheme({
     }
   },
   components: { // components là thư viện cho sẵn của MUI
+    MuiCssBaseline: {
+      styleOverrides:{
+        body:{
+          /* width */
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px'
+          },
+          /* Handle */
+          '*::-webkit-scrollbar-thumb': {
+            background: '#fc5c65',
+            borderRadius: '8px'
+          },
+          /* Handle on hover */
+          '*::-webkit-scrollbar-thumb:hover': {
+            background: '#eb3b5a',
+            borderRadius: '8px'
+          }
+        }
+      }
+    },
     MuiButton: { // Khóa styleOverrides của chủ đề giúp có thể thay đổi mọi kiểu duy nhất được MaterialUI đưa vào DOM. Điều này rất hữu ích nếu bạn muốn áp dụng hệ thống thiết kế hoàn toàn tùy chỉnh cho các thành phần của MaterialUI.
       styleOverrides: {
         root: { // root là biến chứa những thuộc tính cần chỉnh sửa
