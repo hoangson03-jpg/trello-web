@@ -15,16 +15,18 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profiles from './Menu/Profiles'
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 
 // Phần AppBar vì được gọi lại nhiều lần nên để trong components để tiện gọi lại cho những lần sau
 function AppBar() {
   return (
-    <Box px={2} sx={{ // px là padding theo trục hoành
+    <Box sx={{ // px là padding theo trục hoành px={2}
       width: '100%',
       height: (theme) => theme.trello.appBarHeight,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      paddingX: 2, // padding theo chiều trái phải
       gap: 2,
       overflowX: 'auto'
     }}>
@@ -61,7 +63,7 @@ function AppBar() {
           <Template />
           <Starred />
 
-          <Button variant="outlined">Create</Button>
+          <Button variant="outlined" startIcon = {<LibraryAddIcon />}>Create</Button>
         </Box>
       </Box>
       <Box sx={{
