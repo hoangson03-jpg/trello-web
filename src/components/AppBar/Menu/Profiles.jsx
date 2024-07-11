@@ -35,7 +35,7 @@ function Profiles() {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar
-            sx={{ width: 32, height: 32 }}
+            sx={{ width: 34, height: 34 }}
             alt='SonNe'
             src='https://cdn.mozart.edu.vn/wp-content/uploads/2024/04/avatar-cute-dang-yeu-1.jpg' />
         </IconButton>
