@@ -37,7 +37,8 @@ function BoardBar() {
       paddingX: 2,
       gap: 2,
       overflowX: 'auto',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#353b48' : '#0984e3')
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#353b48' : '#0984e3'),
+      '&::-webkit-scrollbar-track':{ m: 2.5 }
     }}>
       <Box sx={{ display: { xs:'none', md:'flex', gap: 1 } }}>
         <Box sx={{
@@ -95,74 +96,77 @@ function BoardBar() {
         <AvatarGroup
           max={7}
           sx={{
+            minWidth: '120px',
             gap: '10px',
             '& .MuiAvatar-root': {
               width: '34px',
               height: '34px',
               fontSize: '16px',
-              border: 'none'
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              '&:first-of-type': { bgcolor: '#a4b0be' }
             }
           }}
         >
-          <Tooltip>
+          <Tooltip tilte="HoangSin">
             <Avatar
               alt="Remy Sharp"
-              sx={{ width: 30, height: 30 }}
               src="https://cdn.mozart.edu.vn/wp-content/uploads/2024/04/avatar-cute-dang-yeu-1.jpg" />
           </Tooltip>
-          <Tooltip>
+          <Tooltip tilte="HoangSin">
             <Avatar
-              alt="Remy Sharp"
+              alt="Ranny Sim"
               src="https://i.pinimg.com/564x/60/b3/b8/60b3b888914534cfa940f458c2143798.jpg" />
           </Tooltip>
-          <Tooltip>
+          <Tooltip tilte="HoangSin">
             <Avatar
-              alt="Remy Sharp"
+              alt="Ron Mon"
               src="https://i.pinimg.com/236x/db/8d/48/db8d4877d92d07b4028d19f4c367ab50.jpg" />
           </Tooltip>
-          <Tooltip>
+          <Tooltip tilte="HoangSin">
             <Avatar
-              alt="Remy Sharp"
+              alt="Saphire Mandy"
               src="https://cellphones.com.vn/sforum/_next/image?url=https%3A%2F%2Fcdn-media.sforum.vn%2Fstorage%2Fapp%2Fmedia%2Fwp-content%2Fuploads%2F2024%2F02%2Fanh-avatar-cute-thumbnail.jpg&w=3840&q=75" />
           </Tooltip>
-          <Tooltip>
+          <Tooltip tilte="HoangSin">
             <Avatar
-              alt="Remy Sharp"
+              alt="Plenty Miles"
               src="https://haycafe.vn/wp-content/uploads/2021/12/Hinh-nen-cute.jpg" />
           </Tooltip>
-          <Tooltip>
+          <Tooltip tilte="HoangSin">
             <Avatar
-              alt="Remy Sharp"
+              alt="Phoenix Joan"
+              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
+          </Tooltip>
+          <Tooltip tilte="HoangSin">
+            <Avatar
+              alt="Harley Cindy"
+              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
+          </Tooltip>
+          <Tooltip tilte="HoangSin">
+            <Avatar
+              alt=""
+              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
+          </Tooltip>
+          <Tooltip tilte="HoangSin">
+            <Avatar
+              alt=""
+              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
+          </Tooltip>
+          <Tooltip tilte="HoangSin">
+            <Avatar
+              alt=""
               src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
           </Tooltip>
           <Tooltip>
             <Avatar
-              alt="Remy Sharp"
+              alt=""
               src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
           </Tooltip>
           <Tooltip>
             <Avatar
-              alt="Remy Sharp"
-              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
-          </Tooltip>
-          <Tooltip>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
-          </Tooltip>
-          <Tooltip>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
-          </Tooltip>
-          <Tooltip>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
-          </Tooltip>
-          <Tooltip>
-            <Avatar
-              alt="Remy Sharp"
+              alt=""
               src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-95.jpg" />
           </Tooltip>
         </AvatarGroup>

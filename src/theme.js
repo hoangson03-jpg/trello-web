@@ -4,11 +4,16 @@ import { red, indigo, teal, cyan, deepOrange } from '@mui/material/colors'
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 import { OutlinedInput } from '@mui/material'
 
+const APP_BAR_HEIGHT = '58px'
+const BOARD_BAR_HEIGHT = '60px'
+const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
+
 // Create a theme instance.
 const theme = extendTheme({
   trello: {
-    appBarHeight: '58px',
-    boardBarHeight: '68px'
+    appBarHeight: APP_BAR_HEIGHT,
+    boardBarHeight: BOARD_BAR_HEIGHT,
+    boardContentHeight: BOARD_CONTENT_HEIGHT
   },
   colorSchemes: {
   //   light: {
@@ -30,8 +35,8 @@ const theme = extendTheme({
         body:{
           /* width */
           '*::-webkit-scrollbar': {
-            width: '8px',
-            height: '8px'
+            width: '5px',
+            height: '5px'
           },
           /* Handle */
           '*::-webkit-scrollbar-thumb': {
@@ -58,10 +63,14 @@ const theme = extendTheme({
     },
     MuiInputLabel:{
       styleOverrides:{
-        root: ({ theme }) => ({
-          // color: theme.palette.primary.main,
-          fontSize: '0.865rem'
-        })
+        root: { fontSize: '0.865rem' }
+      }
+    },
+    MuiTypography:{
+      styleOverrides:{
+        root: { 
+          '&.MuiTypography-body1': { fontSize: '0.85rem' }
+        }
       }
     },
     MuiOutlinedInput: {
@@ -73,7 +82,7 @@ const theme = extendTheme({
         //     fontSize: '0.85rem'
         //   }
         // } // Nếu không cần return thì làm như bên dưới
-        root: ({ theme }) => ({
+        root: {
           borderRadius: '5px',
           // color: theme.palette.primary.main,
           fontSize: '0.865rem',
@@ -89,7 +98,7 @@ const theme = extendTheme({
           // Sửa phần khi click vào search không còn bị bôi đậm lên
           '&: fieldset':{ borderWidth: '1px !important' },
           '.Mui-focused fieldset':{ borderWidth: '1px !important' }
-        })
+        }
       }
     }
   }
