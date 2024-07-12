@@ -11,18 +11,18 @@ const theme = extendTheme({
     boardBarHeight: '68px'
   },
   colorSchemes: {
-    light: {
-      palette: {
-        primary: deepOrange,
-        secondary: red
-      }
-    },
-    dark: {
-      palette: {
-        primary: indigo,
-        secondary: teal
-      }
-    }
+  //   light: {
+  //     palette: {
+  //       primary: deepOrange,
+  //       secondary: red
+  //     }
+  //   },
+  //   dark: {
+  //     palette: {
+  //       primary: indigo,
+  //       secondary: teal
+  //     }
+  //   }
   },
   components: { // components là thư viện cho sẵn của MUI
     MuiCssBaseline: {
@@ -35,12 +35,12 @@ const theme = extendTheme({
           },
           /* Handle */
           '*::-webkit-scrollbar-thumb': {
-            background: '#fc5c65',
+            backgroundColor: '#dcdde1',
             borderRadius: '8px'
           },
           /* Handle on hover */
           '*::-webkit-scrollbar-thumb:hover': {
-            background: '#eb3b5a',
+            background: 'white',
             borderRadius: '8px'
           }
         }
@@ -50,6 +50,8 @@ const theme = extendTheme({
       styleOverrides: {
         root: { // root là biến chứa những thuộc tính cần chỉnh sửa
           textTransform: 'none',
+          borderWidth: '0.5px',
+          '&:hover': { borderWidth: '0.5px' },
           fontSize: '0.9rem'
         }
       }
@@ -57,7 +59,7 @@ const theme = extendTheme({
     MuiInputLabel:{
       styleOverrides:{
         root: ({ theme }) => ({
-          color: theme.palette.primary.main,
+          // color: theme.palette.primary.main,
           fontSize: '0.865rem'
         })
       }
@@ -65,27 +67,28 @@ const theme = extendTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         // root: ({theme}) => { // Để arrow function để lấy giá trị theme. Để cặp {} thì phải có return và ưu tiên khi cần lấy giá trị ở console.log
-        //   return { 
+        //   return {
         //     borderRadius: '10px',
         //     color: theme.palette.primary.main,
         //     fontSize: '0.85rem'
         //   }
         // } // Nếu không cần return thì làm như bên dưới
         root: ({ theme }) => ({
-          borderRadius: '10px',
-          color: theme.palette.primary.main,
+          borderRadius: '5px',
+          // color: theme.palette.primary.main,
           fontSize: '0.865rem',
-          '.MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.light // border không viết hoa nhé
-          },
-          '&:hover': {
-            '.MuiOutlinedInput-notchedOutline': {
-              borderColor: theme.palette.primary.main // để sửa khi di chuột vào thì in đậm ( để trong json object )
-            }
-          },
-          '& fieldset': { //Phải có khoảng trống rồi mới đến fieldset sau và để nó chạy thẳng vào fieldset
-            borderWidth: '1px !important' // Sửa phần khi click vào search không còn bị bôi đậm lên
-          }
+          // '.MuiOutlinedInput-notchedOutline': {
+          //   borderColor: theme.palette.primary.light // border không viết hoa nhé
+          // },
+          // '&:hover': {
+          //   '.MuiOutlinedInput-notchedOutline': {
+          //     borderColor: theme.palette.primary.main // để sửa khi di chuột vào thì in đậm ( để trong json object )
+          //   }
+          // },
+          '& fieldset': { borderWidth: '0.5px !important' }, //Phải có khoảng trống rồi mới đến fieldset sau và để nó chạy thẳng vào fieldset
+          // Sửa phần khi click vào search không còn bị bôi đậm lên
+          '&: fieldset':{ borderWidth: '1px !important' },
+          '.Mui-focused fieldset':{ borderWidth: '1px !important' }
         })
       }
     }

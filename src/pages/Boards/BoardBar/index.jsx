@@ -15,14 +15,12 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 
 const MENU_STYLES = {
-  color: 'primary.main',
-  bgcolor: 'white',
+  color: 'white',
+  bgcolor: 'transparent',
   border: 'none',
   borderRadius: '3px',
   paddingX: '5px',
-  '& .MuiSvgIcon-root':{ // Custom phần SvgIcon khi bật Inspect (F12) và select vào nó thì sẽ có class "MuiSvgIcon root"
-    color: 'primary.main'
-  },
+  '.MuiSvgIcon-root' : { color: 'white' },
   '&:hover':{ // Khi muốn tạo hover cho SvgIcon thì viết '&:hover' như này và cho những element cần custom vào json object
     bgcolor: 'primary.100'
   }
@@ -39,7 +37,7 @@ function BoardBar() {
       paddingX: 2,
       gap: 2,
       overflowX: 'auto',
-      borderTop: '1px solid #fd9644'
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#353b48' : '#0984e3')
     }}>
       <Box sx={{ display: { xs:'none', md:'flex', gap: 1 } }}>
         <Box sx={{
@@ -50,7 +48,7 @@ function BoardBar() {
           <Stack direction="row" spacing={1}>
             <Chip
               sx={MENU_STYLES} // MENU_STYLES chỉ cần được để ở trong 1 cặp ngoặc nhọn vì ở trên khi khai báo MENU_STYLES đã dùng 1 cặp ngoặc nhọn
-              icon={<DashboardIcon />}
+              icon={<DashboardIcon/>}
               label="Snobby's Trello Web"
               clickable // Để thay thế cho cursor/hover/onclick
             />
@@ -86,21 +84,30 @@ function BoardBar() {
         alignItems: 'center',
         gap: 2
       }}>
-        <Button variant="outlined" startIcon = {<PersonAddIcon />}>Invite</Button>
+        <Button variant="outlined" startIcon = {<PersonAddIcon/>}
+          sx={{
+            color: 'white',
+            borderColor: 'white',
+            '&:hover': { borderColor: 'white' }
+          }}
+        >
+          Invite</Button>
         <AvatarGroup
           max={7}
           sx={{
+            gap: '10px',
             '& .MuiAvatar-root': {
               width: '34px',
               height: '34px',
-              fontSize: '16px'
+              fontSize: '16px',
+              border: 'none'
             }
           }}
         >
           <Tooltip>
             <Avatar
               alt="Remy Sharp"
-              sx={{ width: 30, height: 30}}
+              sx={{ width: 30, height: 30 }}
               src="https://cdn.mozart.edu.vn/wp-content/uploads/2024/04/avatar-cute-dang-yeu-1.jpg" />
           </Tooltip>
           <Tooltip>
