@@ -1,3 +1,4 @@
+import { useState } from 'react' // Biến State sẽ render lại component và cập nhật giá trị lên UI luôn
 import ModeSelect from '~/components/ModeSelect'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 import AppsIcon from '@mui/icons-material/Apps'
@@ -16,9 +17,14 @@ import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profiles from './Menu/Profiles'
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
+import InputAdornment from '@mui/material/InputAdornment'
+import SearchIcon from '@mui/icons-material/Search'
+import CloseIcon from '@mui/icons-material/Close'
+import { ColorLens } from '@mui/icons-material'
 
 // Phần AppBar vì được gọi lại nhiều lần nên để trong components để tiện gọi lại cho những lần sau
 function AppBar() {
+  const [searchValue, setSearchValue] = useState()
   return (
     <Box sx={{ // px là padding theo trục hoành px={2}
       width: '100%',
@@ -28,7 +34,8 @@ function AppBar() {
       justifyContent: 'space-between',
       paddingX: 2, // padding theo chiều trái phải
       gap: 2,
-      overflowX: 'auto'
+      overflowX: 'auto',
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2f3640' : '#0652DD') // Khi dùng arrow function đối với () thì phải trỏ tới ()
     }}>
       <Box sx={{
         display: 'flex',
@@ -36,7 +43,7 @@ function AppBar() {
         gap: 2
       }}>
         <AppsIcon sx={{
-          color: 'primary.main'
+          color: 'white'
         }} />
         <Box sx={{
           display: 'flex',
@@ -44,14 +51,14 @@ function AppBar() {
           gap: 0.4
         }}>
           <SvgIcon component={TrelloIcon} inheritViewBox sx={{
-            color: 'primary.main',
+            color: 'white',
             fontSize: 'large'
           }} />
           <Typography variant='span'
             sx={{
               fontSize: '1.2rem',
               fontWeight: 'bold',
-              color: 'primary.main'
+              color: 'white'
             }}>
             Trello
           </Typography>
@@ -63,7 +70,12 @@ function AppBar() {
           <Template />
           <Starred />
 
-          <Button variant="outlined" startIcon = {<LibraryAddIcon />}>Create</Button>
+          <Button startIcon = {<LibraryAddIcon />} sx={{
+            color: 'white'
+          }}
+          >
+            Create
+          </Button>
         </Box>
       </Box>
       <Box sx={{
@@ -71,15 +83,53 @@ function AppBar() {
         alignItems: 'center',
         gap: 2
       }}>
-        <TextField id="outlined-search" label="Search..." type="search" size='small' sx={{ minWidth: '120px' }} />
+        <TextField
+          id="outlined-search"
+          label="Search..."
+          type="text"
+          size='small'
+          value={searchValue} // Cho giá trị bằng biến trong useState
+          onChange={(e) => setSearchValue(e.target.value)} // Bắt sự kiện onChange (event) trỏ đến setSearchValue giá trị của event được hướng đến
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{color: 'white'}} />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <CloseIcon sx={{
+                  color: searchValue ? 'white' : 'transparent',
+                  fontSize: 'small',
+                  cursor: 'pointer'
+                }}
+                onClick = {() => setSearchValue('')} // Khi click vào thì nó sẽ chuyển về giá trị rỗng
+                />
+              </InputAdornment>
+            )
+          }}
+          sx={{
+            minWidth: '120px',
+            maxWidth: '190px',
+            '& label': { color: 'white' },
+            '& input': { color: 'white' },
+            '& label.Mui-focused': { color: 'white' },
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': { borderColor: 'white' },
+              '&:hover fieldset':{ borderColor: 'white' },
+              '&.Mui-focused fieldset':{ borderColor: 'white' }
+            }
+          }}
+
+        />
         <ModeSelect />
         <Tooltip title="Notifications">
-          <Badge color="secondary" variant="dot" sx={{ cursor: 'pointer' }} >
-            <NotificationsNoneIcon sx={{ color: 'primary.main' }} />
+          <Badge color="warning" variant="dot" sx={{ cursor: 'pointer' }} >
+            <NotificationsNoneIcon sx={{ color: 'white' }} />
           </Badge>
         </Tooltip>
         <Tooltip title="Help">
-          <HelpOutlineIcon sx={{ cursor: 'pointer', color: 'primary.main' }} />
+          <HelpOutlineIcon sx={{ cursor: 'pointer', color: 'white' }} />
         </Tooltip>
         <Profiles />
       </Box>
