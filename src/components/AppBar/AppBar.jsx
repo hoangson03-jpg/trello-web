@@ -1,5 +1,5 @@
 import { useState } from 'react' // Biến State sẽ render lại component và cập nhật giá trị lên UI luôn
-import ModeSelect from '~/components/ModeSelect'
+import ModeSelect from '~/components/ModeSelect/ModeSelect'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 import AppsIcon from '@mui/icons-material/Apps'
 import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
