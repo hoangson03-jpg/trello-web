@@ -12,6 +12,7 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import capitalizeFirstLetter from '~/utils/formatters'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 
 const MENU_STYLES = {
@@ -26,7 +27,7 @@ const MENU_STYLES = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
   return (
     <Box sx={{
       width: '100%',
@@ -50,12 +51,12 @@ function BoardBar() {
             <Chip
               sx={MENU_STYLES} // MENU_STYLES chỉ cần được để ở trong 1 cặp ngoặc nhọn vì ở trên khi khai báo MENU_STYLES đã dùng 1 cặp ngoặc nhọn
               icon={<DashboardIcon/>}
-              label="Snobby's Trello Web"
+              label={board?.title}
               clickable // Để thay thế cho cursor/hover/onclick
             />
             <Chip
               icon={<VpnLockIcon />}
-              label="Public /Private workspaces"
+              label={capitalizeFirstLetter(board?.type)}
               sx={MENU_STYLES}
               clickable // Để thay thế cho cursor/hover/onclick
             />
