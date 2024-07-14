@@ -8,45 +8,36 @@ import AttachmentIcon from '@mui/icons-material/Attachment'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-function Card({ temporaryHideMedia }) {
-  if (temporaryHideMedia) {
-    return (
-      <MuiCard sx={{
-        cursor: 'pointer',
-        boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
-        overflow: 'unset'
-      }}>
-        <CardContent sx={{
-          p: 1.5 }}>
-          <Typography>
-            Card 2
-          </Typography>
-        </CardContent>
-      </MuiCard>
-    )
+function Card({ card }) {
+
+  const ShowCardActions = () => {
+    return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
   }
+
   return (
     <MuiCard sx={{
       cursor: 'pointer',
       boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
       overflow: 'unset'
     }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="https://cellphones.com.vn/sforum/wp-content/uploads/2022/11/pc-gaming-5-trieu.png"
-        title="green iguana"
-      />
+      {card?.cover && <CardMedia sx={{ height: 140 }} image={card?.cover}/> }
       <CardContent sx={{
         p: 1.5 }}>
-        <Typography>
-            PC Gaming with high techology
-        </Typography>
+        <Typography>{card?.title}</Typography>
       </CardContent>
-      <CardActions sx={{ p: '0 4px 8px 4px' }}>
-        <Button size="small" startIcon={<GroupsIcon />}>100</Button>
-        <Button size="small" startIcon={<CommentIcon />}>40</Button>
-        <Button size="small" startIcon={<AttachmentIcon />}>20</Button>
-      </CardActions>
+      {ShowCardActions() &&
+        <CardActions sx={{ p: '0 4px 8px 4px' }}>
+          {!!card?.memberIds?.length &&
+        <Button size="small" startIcon={<GroupsIcon />}>{card?.memberIds.length}</Button>
+          }
+          {!!card?.comments?.length &&
+        <Button size="small" startIcon={<CommentIcon />}>{card?.comments.length}</Button>
+          }
+          {!!card?.attachments?.length &&
+        <Button size="small" startIcon={<AttachmentIcon />}>{card?.attachments.length}</Button>
+          }
+        </CardActions>
+      }
     </MuiCard>
   )
 }

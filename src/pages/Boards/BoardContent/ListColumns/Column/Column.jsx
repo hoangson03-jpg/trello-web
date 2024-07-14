@@ -15,10 +15,11 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import ListCards from './ListCards/ListCards'
+import { mapOrder } from '~/utils/sorts'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 
 
-function Column() {
+function Column({ column }) {
   const [anchorEl, setAnchorEl] = useState(null) // Ở đây có state là anchorElement và có trạng thái là open = cái boolean trong JS mặc định là null
   const open = Boolean(anchorEl) // Khi click vào thì nó sẽ bắt sự kiện onclick -> giá trị anchorE1 sẽ là true
   const handleClick = (event) => {
@@ -27,6 +28,7 @@ function Column() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const orderedCards = mapOrder(column?.cards,column?.cardOrderIds,'_id')
   return (
     // Box Column Test 1
     <Box sx={{
@@ -51,7 +53,7 @@ function Column() {
           fontWeight: 'bold',
           cursor: 'pointer'
         }}>
-              Column Title
+          {column?.title}
         </Typography>
         <Box>
           <Tooltip title='More options'>
@@ -103,7 +105,7 @@ function Column() {
       </Box>
 
       {/* Box List Card */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
 
       {/* Box Column Footer */}
       <Box sx={{

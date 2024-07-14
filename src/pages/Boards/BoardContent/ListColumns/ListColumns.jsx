@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import ControlPointIcon from '@mui/icons-material/ControlPoint'
 import { Box } from '@mui/material'
 
-function ListColumns() {
+function ListColumns({ columns }) {
 
   return (
     <Box sx={{
@@ -15,10 +15,8 @@ function ListColumns() {
       overflowY: 'hidden',
       '&::-webkit-scrollbar-track':{ m: 3 }
     }}>
+      {columns?.map(column => <Column key={column._id} column={column} />)}
 
-      <Column />
-      <Column />
-      <Column />
 
       {/* Box Add New Collumn */}
       <Box sx={{
