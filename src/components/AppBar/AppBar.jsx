@@ -35,7 +35,7 @@ function AppBar() {
       paddingX: 2, // padding theo chiều trái phải
       gap: 2,
       overflowX: 'auto',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#1e272e' : '#0652DD'), // Khi dùng arrow function đối với () thì phải trỏ tới ()
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#1e272e' : '#e66767'), // Khi dùng arrow function đối với () thì phải trỏ tới ()
       '&::-webkit-scrollbar-track':{ m: 2.5 }
     }}>
       <Box sx={{
