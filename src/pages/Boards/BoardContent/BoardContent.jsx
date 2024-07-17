@@ -8,7 +8,8 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-  defaultDropAnimationSideEffects
+  defaultDropAnimationSideEffects,
+  closestCorners
 } from '@dnd-kit/core'
 import {
   arrayMove
@@ -173,6 +174,7 @@ function BoardContent({ board }) {
     setactiveDragItemType(null)
     setactiveDragItemData(null)
   }
+
   // Animation khi thả (Drop) phần tử - Test bằng cách kéo xong thả trực tiếp và nhìn phần giữ chỗ Overlay
   const customdropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
@@ -186,6 +188,7 @@ function BoardContent({ board }) {
   return (
     <DndContext
       sensors={websensors}
+      collisionDetection={closestCorners}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd} >
