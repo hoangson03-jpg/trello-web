@@ -11,9 +11,9 @@ import {
   defaultDropAnimationSideEffects,
   closestCorners,
   pointerWithin,
-  rectIntersection,
-  getFirstCollision,
-  closestCenter
+  // rectIntersection,
+  getFirstCollision
+  // closestCenter
 } from '@dnd-kit/core'
 import {
   arrayMove
@@ -23,7 +23,8 @@ import {
 } from '@dnd-kit/sortable'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
+import { generatePlaceholderCard } from '~/utils/formatters'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 import ListColumns from './ListColumns/ListColumns'
 
@@ -101,6 +102,12 @@ function BoardContent({ board }) {
         // Sau khi trả về mảng mới thì gán ngược lại vào ActiveColumn.cards
         nextActiveColumn.cards = nextActiveColumn?.cards?.filter(card => card?._id !== activeDraggingCardId)
 
+        // Thêm Placeholder Card nếu Column rỗng: bị kéo hết Card đi, không còn cái nào nữa
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
+
+
         // Cập nhật lại mảng cardOrrderIds cho chuẩn dữ liệu
         nextActiveColumn.cardOrderIds = nextActiveColumn?.cards.map(card => card._id)
       }
@@ -122,6 +129,9 @@ function BoardContent({ board }) {
             columnId: nextOverColumn?._id
           }
         )
+
+        // Xóa placeholder Card nếu nó đang tồn tại
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
 
         nextOverColumn.cardOrderIds = nextOverColumn?.cards.map(card => card._id)
 
