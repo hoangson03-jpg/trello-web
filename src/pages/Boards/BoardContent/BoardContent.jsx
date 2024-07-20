@@ -318,22 +318,27 @@ function BoardContent({ board }) {
       return closestCorners({ ...args })
     }
 
-    // Tìm điểm giao nhau, va chạm - intersection với con trỏ
+    // Tìm điểm giao nhau, va chạm, trả về một mảng các va chạm - intersection với con trỏ
     const pointerIntersections = pointerWithin(args)
+
+    // Nếu pointerIntersections là mảng rỗng, return luôn không làm gì hết
+    // Fix triệt để bug flickering của thư viện Dnd=kit trong trường hợp sau:
+    // Kéo một card có image cover lớn và kéo lên phía trên cùng ra khỏi khu vực kéo thả
+    if (!pointerIntersections?.length) return
 
     //Thuật toán phát hiện va chạm sẽ trả về một mảng các va chạm ở đây
 
-    const intersections = !!pointerIntersections?.lenghth ? pointerIntersections : rectIntersection(args)
+    // const intersections = !!pointerIntersections?.lenghth ? pointerIntersections : rectIntersection(args)
 
     // Tìm overId đầu tiên trong đám intersections ở trên
-    let overId = getFirstCollision(intersections, 'id')
+    let overId = getFirstCollision(pointerIntersections, 'id')
     // console.log('overId: ', overId)
     if (overId) {
       // Nếu cái over nó là column thì sẽ tìm tới cái cardId gần nhất bên trong khu vực va chạm đó dựa vào thuật toán phát hiện va chạm closestCenter hoặc closestCorners đều được. Tuy nhiên ở đây dùng closestCenter mượt mà hơn
 
       const intersectColumn = orderedColumns.find(column => column?._id === overId)
       if (intersectColumn) {
-        overId = closestCenter ({
+        overId = closestCorners ({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
             return (container.id !== overId) && (intersectColumn?.cardOrderIds?.includes(container.id))
