@@ -48,12 +48,14 @@ function BoardBar({ board }) {
           gap: 2
         }}>
           <Stack direction="row" spacing={1}>
-            <Chip
-              sx={MENU_STYLES} // MENU_STYLES chỉ cần được để ở trong 1 cặp ngoặc nhọn vì ở trên khi khai báo MENU_STYLES đã dùng 1 cặp ngoặc nhọn
-              icon={<DashboardIcon/>}
-              label={board?.title}
-              clickable // Để thay thế cho cursor/hover/onclick
-            />
+            <Tooltip title={board?.description}>
+              <Chip
+                sx={MENU_STYLES} // MENU_STYLES chỉ cần được để ở trong 1 cặp ngoặc nhọn vì ở trên khi khai báo MENU_STYLES đã dùng 1 cặp ngoặc nhọn
+                icon={<DashboardIcon/>}
+                label={board?.title}
+                clickable // Để thay thế cho cursor/hover/onclick
+              />
+            </Tooltip>
             <Chip
               icon={<VpnLockIcon />}
               label={capitalizeFirstLetter(board?.type)}
