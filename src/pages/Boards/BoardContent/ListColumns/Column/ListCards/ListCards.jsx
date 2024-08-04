@@ -10,7 +10,7 @@ function ListCards({ cards }) {
   return (
     <SortableContext items={cards?.map(c => c._id)} strategy={verticalListSortingStrategy}>
       <Box sx={{
-        p: '0 5px',
+        p: '0 5px 5px 5px',
         m: '0 5px', // Trick lỏ để thanh scroll bar gần hơn với viền và card
         display: 'flex',
         flexDirection: 'column',
