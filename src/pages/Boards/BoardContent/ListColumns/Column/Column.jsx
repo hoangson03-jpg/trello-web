@@ -20,6 +20,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import CloseIcon from '@mui/icons-material/Close'
 import TextField from '@mui/material/TextField'
+import { toast } from 'react-toastify'
 import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 import { Opacity } from '@mui/icons-material'
 
@@ -61,6 +62,16 @@ function Column({ column }) {
   const addNewCard = () => {
     if (!newCardTitle) {
       // console.error('Please enter the Card title!')
+      toast.error('Enter the Card Title please!', {
+        position: 'bottom-left',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      })
       return
     }
 
