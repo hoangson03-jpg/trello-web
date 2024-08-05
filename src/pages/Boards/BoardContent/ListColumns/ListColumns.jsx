@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify'
 import { Box } from '@mui/material'
 import { useState } from 'react'
 
@@ -19,6 +20,16 @@ function ListColumns({ columns }) {
   const addNewColumn = () => {
     if (!newColumnTitle) {
       // console.error('Please enter the column title!')
+      toast.error('Enter the Column Title please!', {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      })
       return
     }
 
