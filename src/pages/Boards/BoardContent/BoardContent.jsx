@@ -3,8 +3,8 @@ import { mapOrder } from '~/utils/sorts' // import dạng {} nếu không khai b
 import {
   DndContext,
   // PointerSensor,
-  // MouseSensor,
-  // TouchSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   DragOverlay,
@@ -16,7 +16,7 @@ import {
   // closestCenter
 } from '@dnd-kit/core'
 
-import { MouseSensor, TouchSensor } from '~/customLibraries/dndKitSensors' 
+// import { MouseSensor } from '~/customLibraries/dndKitSensors'
 import {
   arrayMove
   // SortableContext,
