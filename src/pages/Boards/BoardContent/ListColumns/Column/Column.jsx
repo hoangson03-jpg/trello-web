@@ -25,7 +25,7 @@ import { Box } from '@mui/material' // import Box trong {} để tránh gặp bu
 import { Opacity } from '@mui/icons-material'
 
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: column?._id,
@@ -59,7 +59,7 @@ function Column({ column }) {
 
   const [newCardTitle, setNewCardTitle] = useState('')
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       // console.error('Please enter the Card title!')
       toast.error('Enter the Card Title please!', {
@@ -75,7 +75,13 @@ function Column({ column }) {
       return
     }
 
-    // Gọi API ở đây
+    // Tạo dữ liệu card để gọi API
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+
+    await createNewCard(newCardData)
 
     // Đóng trạng thái thêm Card mới & Clear Input
     toggleOpenNewCardForm()
