@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
-import { mapOrder } from '~/utils/sorts' // import dạng {} nếu không khai báo export default ...
+// import { mapOrder } from '~/utils/sorts' // import dạng {} nếu không khai báo export default ...
 import {
   DndContext,
   // PointerSensor,
@@ -35,7 +35,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_CARD'
 }
 
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInSameColumn, moveCardToDifferentColumn }) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Yêu cầu chuột di chuyển 10px thì mới kích hoạt event, fix trường hợp click bị gọi event
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
@@ -61,7 +61,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
   const lastOverId = useRef(null)
 
   useEffect( () => {
-    setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
+    // Columns đã được sắp xếp ở component cha cao nhất
+    setOrderedColumns(board.columns)
   }, [board])
 
   // Tìm một column theo cardId
@@ -71,7 +72,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
     return orderedColumns.find(columns => columns?.cards?.map(card => card._id)?.includes(cardId) )
   }
 
-  // Fuction chung xử lý việc cập nhật lại state trong trường hợp di chuyển Card giữa các Column khác nhau
+  // Khởi tạo Fuction chung xử lý việc cập nhật lại state trong trường hợp di chuyển Card giữa các Column khác nhau
   const moveCardBetweenDifferentColumns = (
     overColumn,
     overCardId,
@@ -79,7 +80,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
     over,
     activeColumn,
     activeDraggingCardId,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerFrom
   ) => {
     setOrderedColumns(prevColumns => {
       // Tìm vị trí (index) của overCard trong column đích (nơi activeCard sắp được thả)
@@ -139,6 +141,22 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
 
       }
       // Lý do bug là mỗi lần ta kéo là một lần set ngược cái State lại cho nguyên đám column của ta nên tạm thời ta phải return cái spread operator prevColumns
+
+      // Nếu function này được gọi từ handleDragEnd thì mới gọi API 1 lần ở đây
+      if (triggerFrom === 'handleDragEnd') {
+        /**
+         * Gọi lên props function moveCardToDifferentColumn nằm ở component cha cao nhất
+         * Phải dùng tới activeDragItemData.columnId hoặc là originColumn._id ( set vào State từ bước handleDragStart)
+         * chứ không phải activeData trong scope handleDragEnd vì sau khi đi qua onDragOver và tới đây là state của card đã bị update 1 lần rồi
+         */
+        moveCardToDifferentColumn(
+          activeDraggingCardId,
+          originColumn._id,
+          nextOverColumn._id,
+          nextColumns
+        )
+      }
+
       return nextColumns
     })
   }
@@ -193,7 +211,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        'handleDragOver'
       )
     }
 
@@ -246,7 +265,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          'handleDragEnd'
         )
 
       } else {
@@ -265,6 +285,8 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
         // Dùng arrayMove vì kéo card trong một column thì tương tự với logic kéo column trong một board content
         const dndOrderedCards = arrayMove(originColumn?.cards, oldCardIndex, newCardIndex)
 
+        const dndOrderedCardIds = dndOrderedCards.map(card => card._id)
+        // Gọi Update State ở đây để tránh delay hoặc Flickering giao diện lúc kéo nhả cần phải chờ gọi API
         setOrderedColumns(prevColumns => {
         // Clone mảng OrderedColumnsState cũ ra một cái mới để xử lý data rồi return - cập nhật lại OrderedColumnsState mới
           const nextColumns = cloneDeep(prevColumns)
@@ -273,12 +295,14 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
 
           // Cập nhật lại giá trị mới là card và cardOrderIds trong cái targetColumn
           targetColumn.cards = dndOrderedCards
-          targetColumn.cardOrderIds = dndOrderedCards.map(card => card._id)
+          targetColumn.cardOrderIds = dndOrderedCardIds
           // console.log('targetColumn: ', targetColumn)
 
           return nextColumns
         })
 
+        // Gọi lên props function moveCardInSameColumn nằm ở component cha cao nhất (_id.jsx)
+        moveCardInSameColumn(dndOrderedCards, dndOrderedCardIds, originColumn._id)
       }
     }
 
@@ -294,14 +318,14 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
         const dndOrderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
         // 2 console.log dữ liệu này sau dùng để xử lý gọi API
 
+        // Vẫn gọi update State ở đây để tránh delay hoặc Flickering giao diện khi kéo thả cần phải chờ gọi API
+        setOrderedColumns(dndOrderedColumns)
 
         /**
          * Gọi lên props function moveColumns nằm ở component cha cao nhất (boards/_id.jsx)
          */
         moveColumns(dndOrderedColumns)
 
-        // Vẫn gọi update State ở đây để tránh delay hoặc Flickering giao diện khi kéo thả cần phải chờ gọi API
-        setOrderedColumns(dndOrderedColumns)
       }
     }
 
