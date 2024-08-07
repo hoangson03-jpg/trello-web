@@ -1,11 +1,11 @@
-import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
+// import { Box } from '@mui/material' // import Box trong {} để tránh gặp bug về Uncaught Type error
 import Container from '@mui/material/Container'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
-import { fetchBoardDetailsAPI, createCardAPI, createColumnAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createCardAPI, createColumnAPI, updateBoardDetailsAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 
@@ -64,6 +64,19 @@ function Board() {
     setBoard(newBoard)
   }
 
+  // Gọi API và xử lý khi kết thúc kéo thả Column
+  const moveColumns = async (dndOrderedColumns) => {
+    const dndOrderedColumnsIds = dndOrderedColumns.map(d => d._id)
+
+    const newBoard = { ...board }
+    newBoard.columns = dndOrderedColumns
+    newBoard.columnOrderIds = dndOrderedColumnsIds
+    setBoard(newBoard)
+
+    // Gọi API update board
+    await updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
+  }
+
   return (
     <>
       <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
@@ -72,6 +85,7 @@ function Board() {
         <BoardContent
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          moveColumns={moveColumns}
           board={board}
         />
       </Container>
