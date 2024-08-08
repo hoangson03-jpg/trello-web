@@ -12,11 +12,13 @@ import { fetchBoardDetailsAPI,
   createColumnAPI,
   updateBoardDetailsAPI,
   updateColumnDetailsAPI,
-  moveCardToDifferentColumnAPI
+  moveCardToDifferentColumnAPI,
+  deleteColumnDetailsAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { mapOrder } from '~/utils/sorts'
 import { isEmpty } from 'lodash'
+import { toast } from 'react-toastify'
 import { Box } from '@mui/material'
 
 function Board() {
@@ -77,7 +79,7 @@ function Board() {
     const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
     if (columnToUpdate) {
       // Nếu Column rỗng: đang chứa Placeholder card
-      if(columnToUpdate.cards.some(c => c.FE_PlaceholderCard)) {
+      if (columnToUpdate.cards.some(c => c.FE_PlaceholderCard)) {
         columnToUpdate.cards = [createdCard]
         columnToUpdate.cardOrderIds = [createdCard._id]
       } else {
@@ -99,7 +101,7 @@ function Board() {
     setBoard(newBoard)
 
     // Gọi API update board
-    updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
+    updateBoardDetailsAPI(newBoard._id, { columnOrderIds: newBoard.columnOrderIds })
   }
 
   // Khi di chuyển card trong cùng Column thì chỉ cần gọi API để cập nhật mảng cardOrderIds của Column chứa nó
@@ -146,6 +148,28 @@ function Board() {
     })
   }
 
+  // Xử lý xóa Column và Cards
+  const deleteColumnDetails = (columnId) => {
+    // Update cho chuẩn dữ liệu state board
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter(f => f._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+    // Gọi API xử lý bên BE
+    deleteColumnDetailsAPI(columnId).then(res => {
+      toast.success(res?.deleteResult, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      })
+    })
+  }
+
   if (!board) {
     return (
       <Box sx={{
@@ -173,6 +197,7 @@ function Board() {
           moveColumns={moveColumns}
           moveCardInSameColumn={moveCardInSameColumn}
           moveCardToDifferentColumn={moveCardToDifferentColumn}
+          deleteColumnDetails={deleteColumnDetails}
           board={board}
         />
       </Container>

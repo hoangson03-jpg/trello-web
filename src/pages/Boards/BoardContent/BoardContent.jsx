@@ -40,7 +40,8 @@ function BoardContent({ board,
   createNewCard,
   moveColumns,
   moveCardInSameColumn,
-  moveCardToDifferentColumn
+  moveCardToDifferentColumn,
+  deleteColumnDetails
 }) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Yêu cầu chuột di chuyển 10px thì mới kích hoạt event, fix trường hợp click bị gọi event
@@ -323,13 +324,13 @@ function BoardContent({ board,
         const dndOrderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
         // 2 console.log dữ liệu này sau dùng để xử lý gọi API
 
-        // Vẫn gọi update State ở đây để tránh delay hoặc Flickering giao diện khi kéo thả cần phải chờ gọi API
-        setOrderedColumns(dndOrderedColumns)
-
         /**
          * Gọi lên props function moveColumns nằm ở component cha cao nhất (boards/_id.jsx)
          */
         moveColumns(dndOrderedColumns)
+
+        // Vẫn gọi update State ở đây để tránh delay hoặc Flickering giao diện khi kéo thả cần phải chờ gọi API
+        setOrderedColumns(dndOrderedColumns)
 
       }
     }
@@ -424,6 +425,7 @@ function BoardContent({ board,
           columns={orderedColumns}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          deleteColumnDetails={deleteColumnDetails}
         />
         <DragOverlay dropAnimation={customdropAnimation}>
           {(!activeDragItemType) && null}
