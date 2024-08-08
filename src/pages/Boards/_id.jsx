@@ -127,7 +127,7 @@ function Board() {
     setBoard(newBoard)
 
     // Gọi API xử lý phía BE
-    moveCardToDifferentColumn({
+    moveCardToDifferentColumnAPI({
       currentCardId,
       prevColumnId,
       prevCardOrderIds: dndOrderedColumns.find(c => c._id === prevColumnId)?.cardOrderIds,

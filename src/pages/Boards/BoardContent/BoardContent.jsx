@@ -35,7 +35,13 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_CARD'
 }
 
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInSameColumn, moveCardToDifferentColumn }) {
+function BoardContent({ board,
+  createNewColumn,
+  createNewCard,
+  moveColumns,
+  moveCardInSameColumn,
+  moveCardToDifferentColumn
+}) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Yêu cầu chuột di chuyển 10px thì mới kích hoạt event, fix trường hợp click bị gọi event
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
@@ -151,12 +157,11 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
          */
         moveCardToDifferentColumn(
           activeDraggingCardId,
-          originColumn._id,
-          nextOverColumn._id,
+          originColumn?._id,
+          nextOverColumn?._id,
           nextColumns
         )
       }
-
       return nextColumns
     })
   }
@@ -285,7 +290,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
         // Dùng arrayMove vì kéo card trong một column thì tương tự với logic kéo column trong một board content
         const dndOrderedCards = arrayMove(originColumn?.cards, oldCardIndex, newCardIndex)
 
-        const dndOrderedCardIds = dndOrderedCards.map(card => card._id)
+        const dndOrderedCardIds = dndOrderedCards.map(card => card?._id)
         // Gọi Update State ở đây để tránh delay hoặc Flickering giao diện lúc kéo nhả cần phải chờ gọi API
         setOrderedColumns(prevColumns => {
         // Clone mảng OrderedColumnsState cũ ra một cái mới để xử lý data rồi return - cập nhật lại OrderedColumnsState mới
