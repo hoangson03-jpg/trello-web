@@ -41,10 +41,10 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
       confirmationText: 'Confirm',
       cancelmationText: 'Cancel',
       buttonOrder: ['confirm', 'cancel']
-    }).then(
+    }).then(() => {
       // Gọi lên props function deleteColumnDetails nằm ở component cha cao nhất (boards/_id.jsx)
       deleteColumnDetails(column._id)
-    ).catch(() => {})
+    }).catch(() => {})
   }
   const dndKitColumnStyles = {
     // Nếu sử dụng CSS.Translate thì sẽ bị lỗi Stretch bị giãn hoặc co lại phần tử
