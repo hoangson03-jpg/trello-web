@@ -4,6 +4,10 @@ import svgr from 'vite-plugin-svgr' // Sau khi cài vite-plugin-svgr thì import
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // Cho phép Vite sử dụng được process.env, mặc định thì không và sẽ phải dùng import.meta.env
+  define: {
+    'process.env': process.env
+  },
   plugins: [
     react(),
     svgr() // Thêm svgr để sử dụng svg icon
