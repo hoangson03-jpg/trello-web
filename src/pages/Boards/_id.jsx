@@ -30,7 +30,7 @@ function Board() {
     fetchBoardDetailsAPI(boardId).then(board => {
 
       // Sắp xếp thứ tự các column luôn ở đây trước khi đưa dữ liệu xuống bên dưới các component con
-      board.column = mapOrder(board.columns, board.columnOrderIds, '_id')
+      board.columns = mapOrder( board.columns, board.columnOrderIds, '_id' )
 
       // Khi tạo column mới thì nó sẽ chưa có card, cần xử lý vấn đề kéo thả vào một column rỗng
       board.columns.forEach(column => {
@@ -92,7 +92,7 @@ function Board() {
   }
 
   // Gọi API và xử lý khi kết thúc kéo thả Column
-  const moveColumns = (dndOrderedColumns) => {
+  const moveColumns = async (dndOrderedColumns) => {
     const dndOrderedColumnsIds = dndOrderedColumns.map(d => d._id)
 
     const newBoard = { ...board }
@@ -101,7 +101,7 @@ function Board() {
     setBoard(newBoard)
 
     // Gọi API update board
-    updateBoardDetailsAPI(newBoard._id, { columnOrderIds: newBoard.columnOrderIds })
+    await updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
   }
 
   // Khi di chuyển card trong cùng Column thì chỉ cần gọi API để cập nhật mảng cardOrderIds của Column chứa nó
@@ -152,7 +152,7 @@ function Board() {
   const deleteColumnDetails = (columnId) => {
     // Update cho chuẩn dữ liệu state board
     const newBoard = { ...board }
-    newBoard.columns = newBoard.columns.filter(f => f._id !== columnId)
+    newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
     newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
     setBoard(newBoard)
     // Gọi API xử lý bên BE
